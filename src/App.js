@@ -146,6 +146,13 @@ export default function App() {
       "bottom-right"
     );
 
+    /************************ Add popup ******************************/
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      offset: 25,
+    });
+
     const clearances = {
       type: "FeatureCollection",
       features: [
@@ -241,8 +248,8 @@ export default function App() {
                   name: "โรงพยาบาล",
                 },
                 {
-                  id: "school-circle",
-                  name: "โรงเรียน",
+                  id: "ddpm-layer",
+                  name: "ที่ตั้งหน่วยปภ.",
                 },
               ],
             },
@@ -302,6 +309,39 @@ export default function App() {
         }
       });
     }
+    // getSchool();
+
+    // async function getSchool() {
+    //   await axios.get("/school").then(function (response) {
+    //     const response_school = JSON.parse(JSON.stringify(response));
+    //     const school = response_school.data;
+    //     console.log("response.school :::", school);
+    //     // return school;
+    //     map.current.loadImage(
+    //       "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/school.png",
+    //       (error, image) => {
+    //         if (error) throw error;
+
+    //         map.current.addImage("school", image);
+
+    //         map.current.addLayer({
+    //           id: "school-layer",
+    //           type: "symbol",
+    //           source: {
+    //             type: "geojson",
+    //             data: school,
+    //           },
+    //           layout: {
+    //             "icon-image": "school",
+    //             "icon-allow-overlap": true,
+    //             "icon-size": 0.07,
+    //           },
+    //           paint: {},
+    //         });
+    //       }
+    //     );
+    //   });
+    // }
 
     AxiosTest();
     function forwardGeocoder(query) {
@@ -340,58 +380,17 @@ export default function App() {
       return matchingFeatures;
     }
 
-    // getSchool();
-
-    // async function getSchool() {
-    //   let schoolGeojson = { type: "FeatureCollection", features: [] };
-    //   await axios.get("https://gistdaportal.gistda.or.th/arcgis/rest/services/LayerList4/FeatureServer/10/query?where=1%3D1&f=geojson").then(function (response) {
-    //     const school = JSON.stringify(response.data)
-    //     console.log("response.school :::", school);
-    //       for (let point of school) {
-    //         let coordinate = [
-    //           parseFloat(point.longitude),
-    //           parseFloat(point.latitude),
-    //         ];
-    //         let properties = point;
-    //         let feature = {
-    //           type: "Feature",
-    //           geometry: { type: "Point", coordinates: coordinate },
-    //           properties: properties,
-    //         };
-    //         schoolGeojson.features.push(feature);
-
-    //         const popup = new mapboxgl.Popup({
-    //           closeButton: false,
-    //           closeOnClick: false,
-    //           offset: 25,
-    //         });
-
-    //         map.current.on("mouseenter", "schoolGeojson", (e) => {
-    //           map.current.getCanvas().style.cursor = "pointer";
-    //           const coordinates = e.features[0].geometry.coordinates;
-    //           const title = e.features[0].properties.name_t;
-
-    //           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-    //             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-    //           }
-    //           popup
-    //             .setLngLat(coordinates)
-    //             .setHTML(
-    //               `<div id = "popup-container"><h2>${title}</h2></div>`
-    //             )
-    //             .addTo(map.current);
-    //         });
-    //         map.current.on("mouseleave", "schoolGeojson", () => {
-    //           map.current.getCanvas().style.cursor = "";
-    //           popup.remove();
-    //         });
-    //       }
-    //     });
-    // }
+    // let ddpm = { type: "FeatureCollection", features: [] };
+    // await axios
+    //   .get(
+    //     "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/DDPM_UnitAndResposedArea/FeatureServer/0/query?where=1%3D1&f=geojson"
+    //   )
+    //   .then(function (response) {
+    //     const ddpm_data = JSON.stringify(response.data);
+    //     console.log("response.school :::", ddpm_data);
 
     const incident = "https://event.longdo.com/feed/json";
     getData();
-    // fetchData();
     async function getData() {
       let trafficIncident = { type: "FeatureCollection", features: [] };
       await fetch(incident)
@@ -414,13 +413,6 @@ export default function App() {
             // const marker2 = new mapboxgl.Marker()
             //   .setLngLat([point.longitude, point.latitude])
             //   .addTo(map.current);
-
-            // Create a popup, but don't add it to the map yet.
-            const popup = new mapboxgl.Popup({
-              closeButton: false,
-              closeOnClick: false,
-              offset: 25,
-            });
 
             map.current.on("mouseenter", "trafficIncident", (e) => {
               // Change the cursor style as a UI indicator.
@@ -632,6 +624,7 @@ export default function App() {
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
               data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=1%3D1&f=geojson",
             });
+
             map.current.addLayer({
               id: "hospital-layer",
               type: "symbol",
@@ -639,12 +632,36 @@ export default function App() {
               layout: {
                 "icon-image": "hospital",
                 "icon-allow-overlap": true,
-                "icon-size": 0.07,
+                "icon-size": 0.05,
                 visibility: "visible",
               },
             });
           }
         );
+
+        map.current.on("mouseenter", "hospital-layer", (e) => {
+          // Change the cursor style as a UI indicator.
+          map.current.getCanvas().style.cursor = "pointer";
+
+          const coordinates = e.features[0].geometry.coordinates.slice();
+          const description = e.features[0].properties.unit_name;
+
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "hospital-layer", () => {
+          map.current.getCanvas().style.cursor = "";
+          popup.remove();
+        });
 
         map.current.loadImage(
           "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/ddpm.png",
@@ -655,7 +672,6 @@ export default function App() {
 
             map.current.addSource("ddpm", {
               type: "geojson",
-              // Use a URL for the value for the `data` property.
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
               data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/DDPM_UnitAndResposedArea/FeatureServer/0/query?where=1%3D1&f=geojson",
             });
@@ -672,35 +688,53 @@ export default function App() {
             });
           }
         );
+        map.current.on("mouseenter", "ddpm-layer", (e) => {
+          // Change the cursor style as a UI indicator.
+          map.current.getCanvas().style.cursor = "pointer";
+
+          const coordinates = e.features[0].geometry.coordinates.slice();
+          const description = e.features[0].properties.c_name;
+
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "ddpm-layer", () => {
+          map.current.getCanvas().style.cursor = "";
+          popup.remove();
+        });
         // map.current.loadImage(
         //   "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/school.png",
         //   (error, image) => {
         //     if (error) throw error;
 
         //     map.current.addImage("school", image);
-        //     map.current.addSource("school", {
-        //       type: "geojson",
-        //       data: "schoolGeojson",
-        //     });
+
         //     map.current.addLayer({
-        //       id: "school-circle",
+        //       id: "school",
         //       type: "symbol",
-        //       source: "school",
-        //       paint: {
-        //         // "circle-color": "red",
-        //         // "circle-stroke-width": 1.5,
-        //         // "circle-stroke-color": "white",
-        //         // "circle-radius": ["case", ["get", "cluster"], 10, 5], // 10 pixels for clusters, 5 pixels otherwise
+        //       source: {
+        //         type: "geojson",
+        //         data: school,
         //       },
         //       layout: {
         //         "icon-image": "school",
         //         "icon-allow-overlap": true,
-        //         "icon-size": 0.04,
-        //         visibility: "visible",
+        //         "icon-size": 0.07,
         //       },
+        //       paint: {},
         //     });
         //   }
         // );
+
         // Load an image from an external URL.
         map.current.loadImage(
           "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/warning.png",
@@ -878,9 +912,6 @@ export default function App() {
       </div>
       {/* <nav id="menu"></nav> */}
       <div ref={mapContainer} className="map-container" id="map"></div>
-      {/* <div class="mapboxgl-ctrl mapboxgl-ctrl-group"> */}
-      {/* </div> */}
-      {/* <!-- route report ----> */}
       <div class="sidebar">
         <h1>รายงานเส้นทาง</h1>
         <div id="reports"></div>

@@ -35,7 +35,7 @@ var server = app.listen(1348, function () {
 
 app.use(cors());
 
-//tambon coordinates latlng 
+//get tambon centroid  
 app.get("/tambon_coords", async (req, res) => {
   const [results, metadata] = await sequelize.query(
     //get centroid of geom and convert to latlng
@@ -43,3 +43,13 @@ app.get("/tambon_coords", async (req, res) => {
   );
   res.json(results);
 });
+
+//get school
+app.get("/school", async (req, res) => {
+  const [results, metadata] = await sequelize.query(
+    //get centroid of geom and convert to latlng
+    "select * from school_th"
+  );
+  res.json(results);
+});
+
