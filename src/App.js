@@ -26,7 +26,7 @@ export default function App() {
   var map = useRef(null);
   const mapContainer = useRef(null);
   // const map = useRef(null);
-  const [lng, setLng] = useState(100.4518);
+  const [lng, setLng] = useState(100.4718);
   const [lat, setLat] = useState(13.7563);
   const [zoom, setZoom] = useState(11);
   const reports = document.getElementById("reports");
@@ -117,6 +117,7 @@ export default function App() {
     /********************************* direction ***************************/
     const directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
+      // interactive: false,
       unit: "metric",
       profile: "mapbox/driving",
       alternatives: true,
@@ -124,6 +125,7 @@ export default function App() {
       controls: { instructions: true },
       flyTo: true,
     });
+
     map.current.scrollZoom.enable();
 
     map.current.on("move", () => {
@@ -230,6 +232,8 @@ export default function App() {
     };
 
     map.current.on("load", function () {
+      map.current.addControl(directions, "top-right");
+
       //overlay controler
       map.current.addControl(
         new MapboxLayersControl({
@@ -250,6 +254,10 @@ export default function App() {
                 {
                   id: "ddpm-layer",
                   name: "ที่ตั้งหน่วยปภ.",
+                },
+                {
+                  id: "afdc-layer",
+                  name: "ที่ตั้งหน่วยบัญชาการทหารพัฒนา",
                 },
               ],
             },
@@ -369,7 +377,7 @@ export default function App() {
           ) {
             feature[
               "place_name"
-            ] = `🌲 ${feature.properties.title} ${feature.properties.amp} ${feature.properties.prov} `;
+            ] = `🇹🇭 ${feature.properties.title} ${feature.properties.amp} ${feature.properties.prov} `;
             feature["center"] = feature.geometry.coordinates;
             feature["place_type"] = ["tambon"];
             matchingFeatures.push(feature);
@@ -379,15 +387,6 @@ export default function App() {
       console.log(matchingFeatures);
       return matchingFeatures;
     }
-
-    // let ddpm = { type: "FeatureCollection", features: [] };
-    // await axios
-    //   .get(
-    //     "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/DDPM_UnitAndResposedArea/FeatureServer/0/query?where=1%3D1&f=geojson"
-    //   )
-    //   .then(function (response) {
-    //     const ddpm_data = JSON.stringify(response.data);
-    //     console.log("response.school :::", ddpm_data);
 
     const incident = "https://event.longdo.com/feed/json";
     getData();
@@ -442,38 +441,6 @@ export default function App() {
               map.current.getCanvas().style.cursor = "";
               popup.remove();
             });
-
-            // map.current.on("mouseenter", "schoolGeojson", (e) => {
-            //   // Change the cursor style as a UI indicator.
-            //   map.current.getCanvas().style.cursor = "pointer";
-
-            //   // Copy coordinates array.
-            //   // const coordinates = [point.longitude, point.latitude];
-            //   const coordinates = e.features[0].geometry.coordinates;
-            //   const description = e.features[0].properties.description;
-            //   const title = e.features[0].properties.title;
-
-            //   // Ensure that if the map is zoomed out such that multiple
-            //   // copies of the feature are visible, the popup appears
-            //   // over the copy being pointed to.
-            //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            //   }
-
-            //   popup
-            //     .setLngLat(coordinates)
-            //     .setHTML(
-            //       `<div id = "popup-container"><h2>${title}</h2><h>${description}</h></div>`
-            //     )
-            //     .addTo(map.current);
-            // });
-            // map.current.on("mouseleave", "trafficIncident", () => {
-            //   map.current.getCanvas().style.cursor = "";
-            //   popup.remove();
-            // });
-            // const marker2 = new mapboxgl.Marker()
-            //   .setLngLat([point.longitude, point.latitude])
-            //   .addTo(map.current);
           }
         });
       console.log(trafficIncident);
@@ -498,19 +465,18 @@ export default function App() {
         }),
         "bottom-right"
       );
-      /************* direction control box ****************************/
-      map.current.addControl(
-        new MapboxDirections({
-          accessToken: mapboxgl.accessToken,
-          unit: "metric",
-          profile: "mapbox/driving",
-          alternatives: true,
-          geometries: "geojson",
-          controls: { instructions: true },
-          flyTo: true,
-        })
-      );
-
+      // /************* direction control box ****************************/
+      // map.current.addControl(
+      //   new MapboxDirections({
+      //     accessToken: mapboxgl.accessToken,
+      //     unit: "metric",
+      //     profile: "mapbox/driving",
+      //     alternatives: true,
+      //     geometries: "geojson",
+      //     controls: { instructions: true },
+      //     flyTo: true,
+      //   })
+      // );
       map.current.on("load", function () {
         // Listen for the `result` event from the MapboxGeocoder that is triggered when a user
         // makes a selection and add a symbol that matches the result.
@@ -560,12 +526,11 @@ export default function App() {
             },
             paint: {
               "circle-radius": 10,
-              "circle-color": "#f30",
+              "circle-color": "#8a8acb",
             },
           });
         }
       });
-
       // After the last frame rendered before the map enters an "idle" state.
       map.current.on("idle", () => {
         const fsSourceId = "featureserver-src";
@@ -663,6 +628,55 @@ export default function App() {
           popup.remove();
         });
 
+        //หน่วยบัญชาการทหารพัฒนา
+        map.current.loadImage(
+          "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/afdc.png",
+          (error, image) => {
+            if (error) throw error;
+
+            map.current.addImage("afdc", image);
+
+            map.current.addSource("afdc", {
+              type: "geojson",
+              // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/AFDC_Location/FeatureServer/0/query?where=1%3D1&f=geojson",
+            });
+            map.current.addLayer({
+              id: "afdc-layer",
+              type: "symbol",
+              source: "afdc",
+              layout: {
+                "icon-image": "afdc",
+                "icon-allow-overlap": true,
+                "icon-size": 0.07,
+                visibility: "visible",
+              },
+            });
+          }
+        );
+        map.current.on("mouseenter", "afdc-layer", (e) => {
+          // Change the cursor style as a UI indicator.
+          map.current.getCanvas().style.cursor = "pointer";
+
+          const coordinates = e.features[0].geometry.coordinates.slice();
+          const description = e.features[0].properties.name;
+
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "afdc-layer", () => {
+          map.current.getCanvas().style.cursor = "";
+          popup.remove();
+        });
         map.current.loadImage(
           "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/ddpm.png",
           (error, image) => {
@@ -682,7 +696,7 @@ export default function App() {
               layout: {
                 "icon-image": "ddpm",
                 "icon-allow-overlap": true,
-                "icon-size": 0.07,
+                "icon-size": 0.06,
                 visibility: "visible",
               },
             });
@@ -754,7 +768,7 @@ export default function App() {
               layout: {
                 "icon-image": "warning",
                 "icon-allow-overlap": true,
-                "icon-size": 0.07,
+                "icon-size": 0.05,
               },
               paint: {},
             });
@@ -850,7 +864,7 @@ export default function App() {
 
             // const collision = isClear ? "is good!" : "is bad.";
             const collision = isClear ? "ไม่ผ่านอุปสรรค !" : "ควรหลีกเลี่ยง.";
-            const emoji = isClear ? "✔️" : "⚠️";
+            const emoji = isClear ? "✅" : "⚠️";
             //const detail = isClear ? "does not go" : "goes";
             const detail = isClear ? "ไม่ผ่าน" : "ผ่าน";
             report.className = isClear ? "item" : "item-warning";
