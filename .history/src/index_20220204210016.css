@@ -17,7 +17,16 @@
   font-family: "Noto Sans Thai", sans-serif;
 }
 
+.auto-search .MuiAutocomplete-listbox{
+  font-family: "Noto Sans Thai", sans-serif;
+}
 .auto-search input[type="text"] {
+  width: 272px !important;
+  border-radius: 15px;
+  font-family: "Noto Sans Thai", sans-serif;
+}
+
+.auto-search listbox {
   width: 272px !important;
   border-radius: 15px;
   font-family: "Noto Sans Thai", sans-serif;

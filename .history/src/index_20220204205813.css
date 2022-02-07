@@ -10,14 +10,24 @@
   justify-content: flex-end;
   font-family: "Noto Sans Thai", sans-serif;
 }
+.auto-search .MuiAutocomplete-root .css-16awh2u-MuiAutocomplete-root {
+  width: 272px !important;
+  border-radius: 15px;
+  font-family: "Noto Sans Thai", sans-serif;
+}
 
 .auto-search input {
   width: 272px !important;
   border-radius: 15px;
   font-family: "Noto Sans Thai", sans-serif;
 }
-
 .auto-search input[type="text"] {
+  width: 272px !important;
+  border-radius: 15px;
+  font-family: "Noto Sans Thai", sans-serif;
+}
+
+.auto-search listbox {
   width: 272px !important;
   border-radius: 15px;
   font-family: "Noto Sans Thai", sans-serif;

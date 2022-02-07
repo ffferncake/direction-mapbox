@@ -1,37 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Noto+Sans+Thai&display=swap");
 
-.auto-search {
-  position: relative;
-  z-index: 1;
-  top: 5px;
-  right: 5px;
-  margin-top: 50px;
-  display: flex;
-  justify-content: flex-end;
-  font-family: "Noto Sans Thai", sans-serif;
-}
-
-.auto-search input {
-  width: 272px !important;
-  border-radius: 15px;
-  font-family: "Noto Sans Thai", sans-serif;
-}
-
-.auto-search input[type="text"] {
-  width: 272px !important;
-  border-radius: 15px;
-  font-family: "Noto Sans Thai", sans-serif;
-}
-
-.mapboxgl-ctrl-directions {
-  margin-top: 80px !important;
-}
-
-.mapboxgl-ctrl-geocoder {
-  max-width: auto !important;
-  width: auto !important;
-}
-
 /* .map-container {
   height: 100vh;
   width: 100%;
@@ -88,11 +56,12 @@ body {
   margin: 10px 20px 30px 10px;
   width: 20%;
   height: 80%;
-  top: 25px;
+  top: 20px;
   bottom: 0;
   padding: 20px;
   background-color: #283238;
   overflow-y: scroll;
+  align-items: center;
 }
 
 .sidebar h1 {
@@ -166,6 +135,7 @@ body {
   text-align: center;
   margin-top: 10%;
   margin-bottom: 10%;
+
 }
 .mapboxgl-popup-content h2 {
   /* background-color: rgba(255, 255, 255, 0.9); */

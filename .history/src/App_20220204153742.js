@@ -1034,7 +1034,7 @@ export default function App() {
   return (
     <div>
       <div class="auto-search">
-        <AutoComplete map={map} />
+       <AutoComplete/>
       </div>
       {/* <!-- lat lng ----> */}
       <div className="bottombar">พิกัดทางทหาร (MGRS) : {mgrs}</div>

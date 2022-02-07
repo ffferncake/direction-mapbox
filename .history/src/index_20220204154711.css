@@ -8,21 +8,12 @@
   margin-top: 50px;
   display: flex;
   justify-content: flex-end;
-  font-family: "Noto Sans Thai", sans-serif;
 }
 
 .auto-search input {
-  width: 272px !important;
+  width: 300px !important;
   border-radius: 15px;
-  font-family: "Noto Sans Thai", sans-serif;
 }
-
-.auto-search input[type="text"] {
-  width: 272px !important;
-  border-radius: 15px;
-  font-family: "Noto Sans Thai", sans-serif;
-}
-
 .mapboxgl-ctrl-directions {
   margin-top: 80px !important;
 }

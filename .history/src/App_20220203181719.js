@@ -13,7 +13,6 @@ import FeatureService from "mapbox-gl-arcgis-featureserver";
 import { MapboxLayersControl } from "@adrisolid/mapbox-gl-layers-control";
 import "@adrisolid/mapbox-gl-layers-control/styles.css";
 import axios from "./hook/axios";
-import AutoComplete from "./autocomplete";
 
 var polyline = require("@mapbox/polyline");
 
@@ -27,7 +26,7 @@ export default function App() {
   var map = useRef(null);
   const mapContainer = useRef(null);
   // const map = useRef(null);
-  const [lng, setLng] = useState(100.4818);
+  const [lng, setLng] = useState(100.4918);
   const [lat, setLat] = useState(13.7463);
   const [zoom, setZoom] = useState(13);
   const reports = document.getElementById("reports");
@@ -113,7 +112,7 @@ export default function App() {
       zoom: 11,
     });
 
-    // map.current.addControl(geocoder, "top-right");
+    map.current.addControl(geocoder, "top-right");
 
     /********************************* direction ***************************/
     const directions = new MapboxDirections({
@@ -1033,9 +1032,6 @@ export default function App() {
   // };
   return (
     <div>
-      <div class="auto-search">
-        <AutoComplete map={map} />
-      </div>
       {/* <!-- lat lng ----> */}
       <div className="bottombar">พิกัดทางทหาร (MGRS) : {mgrs}</div>
       {/* <!-- mgrs ----> */}

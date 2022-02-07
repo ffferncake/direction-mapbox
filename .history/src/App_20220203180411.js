@@ -13,7 +13,6 @@ import FeatureService from "mapbox-gl-arcgis-featureserver";
 import { MapboxLayersControl } from "@adrisolid/mapbox-gl-layers-control";
 import "@adrisolid/mapbox-gl-layers-control/styles.css";
 import axios from "./hook/axios";
-import AutoComplete from "./autocomplete";
 
 var polyline = require("@mapbox/polyline");
 
@@ -27,9 +26,9 @@ export default function App() {
   var map = useRef(null);
   const mapContainer = useRef(null);
   // const map = useRef(null);
-  const [lng, setLng] = useState(100.4818);
-  const [lat, setLat] = useState(13.7463);
-  const [zoom, setZoom] = useState(13);
+  const [lng, setLng] = useState(100.4718);
+  const [lat, setLat] = useState(13.7563);
+  const [zoom, setZoom] = useState(11);
   const reports = document.getElementById("reports");
 
   var converter = require("coordinator"), //node-coordinator
@@ -113,7 +112,7 @@ export default function App() {
       zoom: 11,
     });
 
-    // map.current.addControl(geocoder, "top-right");
+    map.current.addControl(geocoder, "top-right");
 
     /********************************* direction ***************************/
     const directions = new MapboxDirections({
@@ -251,14 +250,6 @@ export default function App() {
                 {
                   id: "hospital-layer",
                   name: "โรงพยาบาล",
-                },
-                {
-                  id: "hospital-layer-2",
-                  name: "โรงพยาบาลส่งเสริมสุขภาพตำบล",
-                },
-                {
-                  id: "hospital-layer-3",
-                  name: "ศูนย์บริการสาธารณสุข",
                 },
                 {
                   id: "ddpm-layer",
@@ -530,59 +521,78 @@ export default function App() {
             visibility: "visible",
           },
         });
-
-        //โรงพยาบาลสนาม
-        // map.current.loadImage(
-        //   "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/covid-hospital.png",
-        //   (error, image) => {
-        //     if (error) throw error;
-
-        //     map.current.addImage("covid-hospital", image);
-
-        //     map.current.addSource("covid-hospital", {
-        //       type: "geojson",
-        //       // Use a URL for the value for the `data` property.
-        //       // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-        //       data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/COVID_Hospital/FeatureServer/0/query?where=1%3D1&f=geojson",
-        //     });
-
-        //     map.current.addLayer({
-        //       id: "covid-hospital-layer",
-        //       type: "symbol",
-        //       source: "covid-hospital",
-        //       layout: {
-        //         "icon-image": "covid-hospital",
-        //         "icon-allow-overlap": true,
-        //         "icon-size": 0.7,
-        //         visibility: "visible",
-        //       },
-        //     });
-        //   }
-        // );
-        // map.current.on("mouseenter", "covid-hospital-layer", (e) => {
-        //   // Change the cursor style as a UI indicator.
-        //   map.current.getCanvas().style.cursor = "pointer";
-
-        //   const coordinates = e.features[0].geometry.coordinates.slice();
-        //   const description = e.features[0].properties.command;
-
-        //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        //   }
-
-        //   popup
-        //     .setLngLat(coordinates)
-        //     .setHTML(
-        //       `<div id = "popup-container"><p class="align-center">${description}</p></div>`
-        //     )
-        //     .addTo(map.current);
+        // map.current.addSource("contours", {
+        //   type: "vector",
+        //   url: "mapbox://mapbox.mapbox-terrain-v2",
         // });
-        // map.current.on("mouseleave", "covid-hospital-layer", () => {
-        //   map.current.getCanvas().style.cursor = "";
-        //   popup.remove();
+        // map.current.addLayer({
+        //   id: "contours",
+        //   type: "line",
+        //   source: "contours",
+        //   "source-layer": "contour",
+        //   layout: {
+        //     // Make the layer visible by default.
+        //     // visibility: "visible",
+        //     visibility: "none",
+        //     "line-join": "round",
+        //     "line-cap": "round",
+        //   },
+        //   paint: {
+        //     "line-color": "#877b59",
+        //     "line-width": 1,
+        //   },
         // });
+        map.current.loadImage(
+          "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/covid-hospital.png",
+          (error, image) => {
+            if (error) throw error;
 
-        //โรงพยาบาล
+            map.current.addImage("covid-hospital", image);
+
+            map.current.addSource("covid-hospital", {
+              type: "geojson",
+              // Use a URL for the value for the `data` property.
+              // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/COVID_Hospital/FeatureServer/0/query?where=1%3D1&f=geojson",
+            });
+
+            map.current.addLayer({
+              id: "covid-hospital-layer",
+              type: "symbol",
+              source: "covid-hospital",
+              layout: {
+                "icon-image": "covid-hospital",
+                "icon-allow-overlap": true,
+                "icon-size": 0.7,
+                visibility: "visible",
+              },
+            });
+          }
+        );
+        map.current.on("mouseenter", "covid-hospital-layer", (e) => {
+          // Change the cursor style as a UI indicator.
+          map.current.getCanvas().style.cursor = "pointer";
+
+          const coordinates = e.features[0].geometry.coordinates.slice();
+          const description = e.features[0].properties.command;
+
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          popup
+            .setLngLat(coordinates)
+            .setHTML(
+              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "covid-hospital-layer", () => {
+          map.current.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+
         map.current.loadImage(
           "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/hospital-1.png",
           (error, image) => {
@@ -604,7 +614,7 @@ export default function App() {
               layout: {
                 "icon-image": "hospital",
                 "icon-allow-overlap": true,
-                "icon-size": 1.2,
+                "icon-size": 0.9,
                 visibility: "visible",
               },
             });
@@ -631,112 +641,6 @@ export default function App() {
         });
 
         map.current.on("mouseleave", "hospital-layer", () => {
-          map.current.getCanvas().style.cursor = "";
-          popup.remove();
-        });
-
-        //โรงพยาบาลส่งเสริมสุขภาพตำบล
-        map.current.loadImage(
-          "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/hospital-2.png",
-          (error, image) => {
-            if (error) throw error;
-
-            map.current.addImage("hospital-2", image);
-
-            map.current.addSource("hospital-2", {
-              type: "geojson",
-              // Use a URL for the value for the `data` property.
-              // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B8%AA%E0%B9%88%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5%27&f=geojson",
-            });
-
-            map.current.addLayer({
-              id: "hospital-layer-2",
-              type: "symbol",
-              source: "hospital-2",
-              layout: {
-                "icon-image": "hospital-2",
-                "icon-allow-overlap": true,
-                "icon-size": 1.2,
-                visibility: "visible",
-              },
-            });
-          }
-        );
-
-        map.current.on("mouseenter", "hospital-layer-2", (e) => {
-          // Change the cursor style as a UI indicator.
-          map.current.getCanvas().style.cursor = "pointer";
-
-          const coordinates = e.features[0].geometry.coordinates.slice();
-          const description = e.features[0].properties.unit_name;
-
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
-
-          popup
-            .setLngLat(coordinates)
-            .setHTML(
-              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
-            )
-            .addTo(map.current);
-        });
-
-        map.current.on("mouseleave", "hospital-layer-2", () => {
-          map.current.getCanvas().style.cursor = "";
-          popup.remove();
-        });
-
-        //ศูนย์บริการสาธารณสุข
-        map.current.loadImage(
-          "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/hospital-3.png",
-          (error, image) => {
-            if (error) throw error;
-
-            map.current.addImage("hospital-3", image);
-
-            map.current.addSource("hospital-3", {
-              type: "geojson",
-              // Use a URL for the value for the `data` property.
-              // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B8%A8%E0%B8%B9%E0%B8%99%E0%B8%A2%E0%B9%8C%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B8%AA%E0%B8%B8%E0%B8%82%27&f=geojson",
-            });
-
-            map.current.addLayer({
-              id: "hospital-layer-3",
-              type: "symbol",
-              source: "hospital-3",
-              layout: {
-                "icon-image": "hospital-3",
-                "icon-allow-overlap": true,
-                "icon-size": 1.2,
-                visibility: "visible",
-              },
-            });
-          }
-        );
-
-        map.current.on("mouseenter", "hospital-layer-3", (e) => {
-          // Change the cursor style as a UI indicator.
-          map.current.getCanvas().style.cursor = "pointer";
-
-          const coordinates = e.features[0].geometry.coordinates.slice();
-          const description = e.features[0].properties.unit_name;
-
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
-
-          popup
-            .setLngLat(coordinates)
-            .setHTML(
-              `<div id = "popup-container"><p class="align-center">${description}</p></div>`
-            )
-            .addTo(map.current);
-        });
-
-        map.current.on("mouseleave", "hospital-layer-3", () => {
           map.current.getCanvas().style.cursor = "";
           popup.remove();
         });
@@ -1033,9 +937,6 @@ export default function App() {
   // };
   return (
     <div>
-      <div class="auto-search">
-        <AutoComplete map={map} />
-      </div>
       {/* <!-- lat lng ----> */}
       <div className="bottombar">พิกัดทางทหาร (MGRS) : {mgrs}</div>
       {/* <!-- mgrs ----> */}

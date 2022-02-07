@@ -22,7 +22,11 @@
   border-radius: 15px;
   font-family: "Noto Sans Thai", sans-serif;
 }
-
+.auto-search input[type="innerText"] {
+  width: 272px !important;
+  border-radius: 15px;
+  font-family: "Noto Sans Thai", sans-serif;
+}
 .mapboxgl-ctrl-directions {
   margin-top: 80px !important;
 }

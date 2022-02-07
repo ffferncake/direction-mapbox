@@ -13,7 +13,6 @@ import FeatureService from "mapbox-gl-arcgis-featureserver";
 import { MapboxLayersControl } from "@adrisolid/mapbox-gl-layers-control";
 import "@adrisolid/mapbox-gl-layers-control/styles.css";
 import axios from "./hook/axios";
-import AutoComplete from "./autocomplete";
 
 var polyline = require("@mapbox/polyline");
 
@@ -1034,7 +1033,7 @@ export default function App() {
   return (
     <div>
       <div class="auto-search">
-        <AutoComplete map={map} />
+       <autoComplete/>
       </div>
       {/* <!-- lat lng ----> */}
       <div className="bottombar">พิกัดทางทหาร (MGRS) : {mgrs}</div>
