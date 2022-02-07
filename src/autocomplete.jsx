@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-
+import { makeStyles } from "@material-ui/styles";
 // export default function autoComplete(props) {
 //     const [isOpen, setIsOpen] = useState(false)
 //     return ("")
@@ -14,7 +14,6 @@ const AutoComplete = (props) => {
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState();
-
   useEffect(() => {
     (async () => {
       const result = await axios.get(
@@ -43,7 +42,6 @@ const AutoComplete = (props) => {
     <Autocomplete
       // multiple
       freeSolo
-      style={{ fontFamily: "Noto Sans Thai" }}
       options={options.map((option) => option.text)}
       //   onChange={(e) => setSelect(e.target.innerText)}
       onKeyDown={(e) => {
@@ -57,7 +55,7 @@ const AutoComplete = (props) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          // label="ค้นหา"
+          label=""
           // variant="filled"
           variant="outlined"
           style={{ fontFamily: "Noto Sans Thai" }}

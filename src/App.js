@@ -31,6 +31,8 @@ export default function App() {
   const [lat, setLat] = useState(13.7463);
   const [zoom, setZoom] = useState(13);
   const reports = document.getElementById("reports");
+  const [value, setvalue] = useState("");
+  const [textValue, setTextValue] = useState("ต้องการบันทึกค่าพิกัด");
 
   var converter = require("coordinator"), //node-coordinator
     fn = converter("latlong", "mgrs"), //to convert lat/long to MGRS with 4 digits of precision (within 10 meters)
@@ -363,7 +365,7 @@ export default function App() {
       console.log(matchingFeatures);
       return matchingFeatures;
     }
-
+    
     const incident = "https://event.longdo.com/feed/json";
     getData();
     async function getData() {
@@ -840,29 +842,6 @@ export default function App() {
           map.current.getCanvas().style.cursor = "";
           popup.remove();
         });
-        // map.current.loadImage(
-        //   "https://raw.githubusercontent.com/ffferncake/InteractiveWebMap/main/school.png",
-        //   (error, image) => {
-        //     if (error) throw error;
-
-        //     map.current.addImage("school", image);
-
-        //     map.current.addLayer({
-        //       id: "school",
-        //       type: "symbol",
-        //       source: {
-        //         type: "geojson",
-        //         data: school,
-        //       },
-        //       layout: {
-        //         "icon-image": "school",
-        //         "icon-allow-overlap": true,
-        //         "icon-size": 0.07,
-        //       },
-        //       paint: {},
-        //     });
-        //   }
-        // );
 
         // Load an image from an external URL.
         map.current.loadImage(
