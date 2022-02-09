@@ -3,34 +3,30 @@
 .auto-search {
   position: relative;
   z-index: 1;
-  /* top: 5px; */
-  margin-left: 880px;
-  /* left: 5px; */
   margin-top: 55px;
-  /* display: flex; */
+  display: flex;
   justify-content: flex-end;
   font-family: "Noto Sans Thai", sans-serif;
-  background-color: rgb(255, 255, 255);
-  width: 300px !important;
 }
 
-.auto-search input {
+.auto-search > div {
   /* width: 272px !important; */
+  background-color: rgb(255, 255, 255);
   font-family: "Noto Sans Thai", sans-serif;
   border-radius: 5px;
   border-width: 5px !important;
   border-color: black !important;
-
+  width: 300px !important;
+  margin-right: 10px;
 }
 
 .auto-search input[type="text"] {
   width: 272px !important;
-  border-radius: 15px ;
+  border-radius: 15px;
   font-family: "Noto Sans Thai", sans-serif;
 }
 .MuiAutocomplete-listbox {
   font-family: "Noto Sans Thai", sans-serif;
-
 }
 .mapboxgl-ctrl-directions {
   margin-top: 80px !important;
