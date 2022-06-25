@@ -43,17 +43,17 @@ export default function App() {
     {
       id: 0,
       title: "Mapbox:Navigation-day",
-      uri: "mapbox://styles/mapbox/navigation-preview-day-v4",
+      uri: "mapbox://styles/mapbox/navigation-preview-day-v4"
     },
     {
       id: 1,
       title: "Mapbox:Navigation-night",
-      uri: "mapbox://styles/mapbox/navigation-preview-night-v4",
+      uri: "mapbox://styles/mapbox/navigation-preview-night-v4"
     },
     {
       id: 2,
       title: "Mapbox:Satellite",
-      uri: "mapbox://styles/mapbox/satellite-v9",
+      uri: "mapbox://styles/mapbox/satellite-v9"
     },
     // {
     //   id: 3,
@@ -78,13 +78,13 @@ export default function App() {
     {
       id: 7,
       title: "OSM:StandardRelief",
-      uri: "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/OSM:StandardRelief?type=style&token=AAPK80529f6ab29e4fcc9129c0222e880f42CIDK8Tfdt0_hyqiFR8sOejZUYhBipMAaJMm1t5-SOhc-87OKIhRxfNoHatYxewiy",
+      uri: "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/OSM:StandardRelief?type=style&token=AAPK80529f6ab29e4fcc9129c0222e880f42CIDK8Tfdt0_hyqiFR8sOejZUYhBipMAaJMm1t5-SOhc-87OKIhRxfNoHatYxewiy"
     },
     {
       id: 8,
       title: "ArcGIS:Topographic:Base",
-      uri: "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/ArcGIS:Topographic:Base?type=style&token=AAPK80529f6ab29e4fcc9129c0222e880f42CIDK8Tfdt0_hyqiFR8sOejZUYhBipMAaJMm1t5-SOhc-87OKIhRxfNoHatYxewiy",
-    },
+      uri: "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/ArcGIS:Topographic:Base?type=style&token=AAPK80529f6ab29e4fcc9129c0222e880f42CIDK8Tfdt0_hyqiFR8sOejZUYhBipMAaJMm1t5-SOhc-87OKIhRxfNoHatYxewiy"
+    }
   ];
 
   const [activeUrl, setActiveUrl] = useState(styles[0].uri);
@@ -95,7 +95,7 @@ export default function App() {
       style: activeUrl,
       center: [lng, lat],
       zoom: zoom,
-      flyTo: true,
+      flyTo: true
     });
 
     /************************************ mapbox switcher ******************************/
@@ -112,7 +112,7 @@ export default function App() {
       limit: 10,
       placeholder: "ค้นหาสถานที่ รหัสไปรษณีย์ จังหวัด", // Placeholder text for the search bar
       localGeocoder: forwardGeocoder,
-      zoom: 11,
+      zoom: 11
     });
 
     // map.current.addControl(geocoder, "top-right");
@@ -126,7 +126,7 @@ export default function App() {
       alternatives: true,
       geometries: "geojson",
       controls: { instructions: true },
-      flyTo: true,
+      flyTo: true
     });
 
     map.current.scrollZoom.enable();
@@ -146,7 +146,7 @@ export default function App() {
     map.current.addControl(
       new RulerControl({
         units: "miles",
-        labelFormat: (n) => `${n.toFixed(2)} miles`,
+        labelFormat: (n) => `${n.toFixed(2)} miles`
       }),
       "bottom-right"
     );
@@ -155,7 +155,7 @@ export default function App() {
     const popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
-      offset: 25,
+      offset: 25
     });
 
     const clearances = {
@@ -165,73 +165,73 @@ export default function App() {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.524, 13.807],
+            coordinates: [100.524, 13.807]
           },
           properties: {
-            clearance: "13' 2",
-          },
+            clearance: "13' 2"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.434, 13.804],
+            coordinates: [100.434, 13.804]
           },
           properties: {
-            clearance: "13' 7",
-          },
+            clearance: "13' 7"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.438, 13.832],
+            coordinates: [100.438, 13.832]
           },
           properties: {
-            clearance: "13' 7",
-          },
+            clearance: "13' 7"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.455, 13.736],
+            coordinates: [100.455, 13.736]
           },
           properties: {
-            clearance: "12' 0",
-          },
+            clearance: "12' 0"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.55946, 13.30213],
+            coordinates: [100.55946, 13.30213]
           },
           properties: {
-            clearance: "13' 6",
-          },
+            clearance: "13' 6"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.529, 13.738],
+            coordinates: [100.529, 13.738]
           },
           properties: {
-            clearance: "13' 6",
-          },
+            clearance: "13' 6"
+          }
         },
         {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [100.548, 13.831],
+            coordinates: [100.548, 13.831]
           },
           properties: {
-            clearance: "11' 6",
-          },
-        },
-      ],
+            clearance: "11' 6"
+          }
+        }
+      ]
     };
 
     map.current.on("load", function () {
@@ -248,29 +248,29 @@ export default function App() {
               children: [
                 {
                   id: "trafficIncident",
-                  name: "อุบัติเหตุ ปิดเบี่ยงจราจร",
+                  name: "อุบัติเหตุ ปิดเบี่ยงจราจร"
                 },
                 {
                   id: "hospital-layer",
-                  name: "โรงพยาบาล",
+                  name: "โรงพยาบาล"
                 },
                 {
                   id: "hospital-layer-2",
-                  name: "โรงพยาบาลส่งเสริมสุขภาพตำบล",
+                  name: "โรงพยาบาลส่งเสริมสุขภาพตำบล"
                 },
                 {
                   id: "hospital-layer-3",
-                  name: "ศูนย์บริการสาธารณสุข",
+                  name: "ศูนย์บริการสาธารณสุข"
                 },
                 {
                   id: "ddpm-layer",
-                  name: "ที่ตั้งหน่วยปภ.",
+                  name: "ที่ตั้งหน่วยปภ."
                 },
                 {
                   id: "afdc-layer",
-                  name: "ที่ตั้งหน่วยบัญชาการทหารพัฒนา",
-                },
-              ],
+                  name: "ที่ตั้งหน่วยบัญชาการทหารพัฒนา"
+                }
+              ]
             },
             {
               name: "เลือกข้อมูลประเทศไทย",
@@ -278,8 +278,8 @@ export default function App() {
               children: [
                 {
                   id: "tambon-lyr",
-                  name: "ขอบเขตตำบล",
-                },
+                  name: "ขอบเขตตำบล"
+                }
                 // {
                 //   id: "amp-layer",
                 //   name: "อำเภอ",
@@ -288,9 +288,9 @@ export default function App() {
                 //   id: "school-circle",
                 //   name: "ตำบล",
                 // },
-              ],
-            },
-          ],
+              ]
+            }
+          ]
         })
       );
     });
@@ -313,15 +313,15 @@ export default function App() {
                 properties: {
                   title: point.tb_tn,
                   amp: point.ap_tn,
-                  prov: point.pv_tn,
+                  prov: point.pv_tn
                 },
                 geometry: {
                   coordinates: [parseFloat(point.long), parseFloat(point.lat)],
-                  type: "Point",
-                },
-              },
+                  type: "Point"
+                }
+              }
             ],
-            type: "FeatureCollection",
+            type: "FeatureCollection"
           });
           // console.log("customData :::", customData);
           // customData.push(c)
@@ -365,7 +365,7 @@ export default function App() {
       console.log(matchingFeatures);
       return matchingFeatures;
     }
-    
+
     const incident = "https://event.longdo.com/feed/json";
     getData();
     async function getData() {
@@ -376,7 +376,7 @@ export default function App() {
           for (let point of data) {
             let coordinate = [
               parseFloat(point.longitude),
-              parseFloat(point.latitude),
+              parseFloat(point.latitude)
             ];
             let properties = point;
             // delete properties.longitude;
@@ -384,7 +384,7 @@ export default function App() {
             let feature = {
               type: "Feature",
               geometry: { type: "Point", coordinates: coordinate },
-              properties: properties,
+              properties: properties
             };
             trafficIncident.features.push(feature);
             // const marker2 = new mapboxgl.Marker()
@@ -425,21 +425,21 @@ export default function App() {
       // After the last frame rendered before the map enters an "idle" state.
 
       const obstacle = buffer(trafficIncident, 0.25, {
-        units: "kilometers",
+        units: "kilometers"
       });
       let bbox = [0, 0, 0, 0];
       let polygon = bboxPolygon(bbox);
 
       const obstacles = buffer(clearances, 0.25, {
-        units: "kilometers",
+        units: "kilometers"
       });
       /* add find user location button */
       map.current.addControl(
         new mapboxgl.GeolocateControl({
           positionOptions: {
-            enableHighAccuracy: true,
+            enableHighAccuracy: true
           },
-          trackUserLocation: true,
+          trackUserLocation: true
         }),
         "bottom-right"
       );
@@ -475,10 +475,10 @@ export default function App() {
               properties: {},
               geometry: {
                 type: "Point",
-                coordinates: coords,
-              },
-            },
-          ],
+                coordinates: coords
+              }
+            }
+          ]
         };
         if (map.current.getLayer("end")) {
           map.current.getSource("end").setData(end);
@@ -496,16 +496,16 @@ export default function App() {
                     properties: {},
                     geometry: {
                       type: "Point",
-                      coordinates: coords,
-                    },
-                  },
-                ],
-              },
+                      coordinates: coords
+                    }
+                  }
+                ]
+              }
             },
             paint: {
               "circle-radius": 10,
-              "circle-color": "#8a8acb",
-            },
+              "circle-color": "#8a8acb"
+            }
           });
         }
       });
@@ -514,7 +514,7 @@ export default function App() {
         const fsSourceId = "featureserver-src";
 
         const service = new FeatureService(fsSourceId, map.current, {
-          url: "https://gistdaportal.gistda.or.th/arcgis/rest/services/LayerList4/FeatureServer/17",
+          url: "https://gistdaportal.gistda.or.th/arcgis/rest/services/LayerList4/FeatureServer/17"
         });
 
         map.current.addLayer({
@@ -524,13 +524,13 @@ export default function App() {
           paint: {
             // "fill-opacity": 0.2,
             "fill-color": "transparent",
-            "fill-outline-color": "red",
+            "fill-outline-color": "red"
           },
           layout: {
             // Make the layer visible by default.
             // visibility: "none",
-            visibility: "visible",
-          },
+            visibility: "visible"
+          }
         });
 
         //โรงพยาบาลสนาม
@@ -596,7 +596,7 @@ export default function App() {
               type: "geojson",
               // Use a URL for the value for the `data` property.
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%27&f=geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%27&f=geojson"
             });
 
             map.current.addLayer({
@@ -607,8 +607,8 @@ export default function App() {
                 "icon-image": "hospital",
                 "icon-allow-overlap": true,
                 "icon-size": 1.2,
-                visibility: "visible",
-              },
+                visibility: "visible"
+              }
             });
           }
         );
@@ -649,7 +649,7 @@ export default function App() {
               type: "geojson",
               // Use a URL for the value for the `data` property.
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B8%AA%E0%B9%88%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5%27&f=geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B8%AA%E0%B9%88%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5%27&f=geojson"
             });
 
             map.current.addLayer({
@@ -660,8 +660,8 @@ export default function App() {
                 "icon-image": "hospital-2",
                 "icon-allow-overlap": true,
                 "icon-size": 1.2,
-                visibility: "visible",
-              },
+                visibility: "visible"
+              }
             });
           }
         );
@@ -702,7 +702,7 @@ export default function App() {
               type: "geojson",
               // Use a URL for the value for the `data` property.
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B8%A8%E0%B8%B9%E0%B8%99%E0%B8%A2%E0%B9%8C%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B8%AA%E0%B8%B8%E0%B8%82%27&f=geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/OpenData/TH_CitizenInfo_Health_20200314/FeatureServer/0/query?where=type+%3D+%27%E0%B8%A8%E0%B8%B9%E0%B8%99%E0%B8%A2%E0%B9%8C%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%93%E0%B8%AA%E0%B8%B8%E0%B8%82%27&f=geojson"
             });
 
             map.current.addLayer({
@@ -713,8 +713,8 @@ export default function App() {
                 "icon-image": "hospital-3",
                 "icon-allow-overlap": true,
                 "icon-size": 1.2,
-                visibility: "visible",
-              },
+                visibility: "visible"
+              }
             });
           }
         );
@@ -754,7 +754,7 @@ export default function App() {
             map.current.addSource("afdc", {
               type: "geojson",
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/AFDC_Location/FeatureServer/0/query?where=1%3D1&f=geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/AFDC_Location/FeatureServer/0/query?where=1%3D1&f=geojson"
             });
             map.current.addLayer({
               id: "afdc-layer",
@@ -764,8 +764,8 @@ export default function App() {
                 "icon-image": "afdc",
                 "icon-allow-overlap": true,
                 "icon-size": 0.07,
-                visibility: "visible",
-              },
+                visibility: "visible"
+              }
             });
           }
         );
@@ -804,7 +804,7 @@ export default function App() {
             map.current.addSource("ddpm", {
               type: "geojson",
               // data: "https://data.opendevelopmentmekong.net/dataset/ab20b509-2b7f-442e-8448-05d3a17651ac/resource/76253a1a-b472-4d64-b209-0ea3114f51f4/download/thailand_health_facilities_th.geojson",
-              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/DDPM_UnitAndResposedArea/FeatureServer/0/query?where=1%3D1&f=geojson",
+              data: "https://geoportal.rtsd.mi.th/arcgis/rest/services/Hosted/DDPM_UnitAndResposedArea/FeatureServer/0/query?where=1%3D1&f=geojson"
             });
             map.current.addLayer({
               id: "ddpm-layer",
@@ -814,8 +814,8 @@ export default function App() {
                 "icon-image": "ddpm",
                 "icon-allow-overlap": true,
                 "icon-size": 0.06,
-                visibility: "visible",
-              },
+                visibility: "visible"
+              }
             });
           }
         );
@@ -857,14 +857,14 @@ export default function App() {
               type: "symbol",
               source: {
                 type: "geojson",
-                data: trafficIncident,
+                data: trafficIncident
               },
               layout: {
                 "icon-image": "warning",
                 "icon-allow-overlap": true,
-                "icon-size": 0.05,
+                "icon-size": 0.05
               },
-              paint: {},
+              paint: {}
             });
           }
         );
@@ -872,8 +872,8 @@ export default function App() {
         map.current.addSource("theBox", {
           type: "geojson",
           data: {
-            type: "Feature",
-          },
+            type: "Feature"
+          }
         });
         map.current.addLayer({
           id: "theBox",
@@ -883,30 +883,30 @@ export default function App() {
           paint: {
             "fill-color": "#FFC300",
             "fill-opacity": 0.5,
-            "fill-outline-color": "#FFC300",
-          },
+            "fill-outline-color": "#FFC300"
+          }
         });
-        // map.current.addLayer({
-        //   id: "clearances",
-        //   type: "fill",
-        //   source: {
-        //     type: "geojson",
-        //     data: obstacle,
-        //   },
-        //   layout: {},
-        //   paint: {
-        //     "fill-color": "#f03b20",
-        //     "fill-opacity": 0.5,
-        //     "fill-outline-color": "#f03b20",
-        //   },
-        // });
+        map.current.addLayer({
+          id: "clearances",
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: obstacle
+          },
+          layout: {},
+          paint: {
+            "fill-color": "#f03b20",
+            "fill-opacity": 0.5,
+            "fill-outline-color": "#f03b20"
+          }
+        });
 
         for (let i = 0; i < 3; i++) {
           map.current.addSource(`route${i}`, {
             type: "geojson",
             data: {
-              type: "Feature",
-            },
+              type: "Feature"
+            }
           });
           map.current.addLayer({
             id: `route${i}`,
@@ -914,14 +914,14 @@ export default function App() {
             source: `route${i}`,
             layout: {
               "line-join": "round",
-              "line-cap": "round",
+              "line-cap": "round"
             },
             paint: {
               "line-color": "#cccccc",
               "line-opacity": 0.5,
               "line-width": 13,
-              "line-blur": 0.5,
-            },
+              "line-blur": 0.5
+            }
           });
         }
 
@@ -932,7 +932,7 @@ export default function App() {
           // Add IDs to the routes
           const routes = event.route.map((route, index) => ({
             ...route,
-            id: index,
+            id: index
           }));
 
           // Hide all routes by setting the opacity to zero.
